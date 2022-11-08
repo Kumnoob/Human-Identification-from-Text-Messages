@@ -1,0 +1,15 @@
+C:\Users\PAT\source\repos\Human-Identification-from-Text-Messages\DataInMail\mailToData\mailToData\bin\Debug\net6.0\mailToData.exe
+C:\Users\PAT\source\repos\Human-Identification-from-Text-Messages\DataInMail\mailToData\mailToData\bin\Debug\net6.0\mailToData.deps.json
+C:\Users\PAT\source\repos\Human-Identification-from-Text-Messages\DataInMail\mailToData\mailToData\bin\Debug\net6.0\mailToData.runtimeconfig.json
+C:\Users\PAT\source\repos\Human-Identification-from-Text-Messages\DataInMail\mailToData\mailToData\bin\Debug\net6.0\mailToData.dll
+C:\Users\PAT\source\repos\Human-Identification-from-Text-Messages\DataInMail\mailToData\mailToData\bin\Debug\net6.0\mailToData.pdb
+C:\Users\PAT\source\repos\Human-Identification-from-Text-Messages\DataInMail\mailToData\mailToData\obj\Debug\net6.0\mailToData.csproj.AssemblyReference.cache
+C:\Users\PAT\source\repos\Human-Identification-from-Text-Messages\DataInMail\mailToData\mailToData\obj\Debug\net6.0\mailToData.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PAT\source\repos\Human-Identification-from-Text-Messages\DataInMail\mailToData\mailToData\obj\Debug\net6.0\mailToData.AssemblyInfoInputs.cache
+C:\Users\PAT\source\repos\Human-Identification-from-Text-Messages\DataInMail\mailToData\mailToData\obj\Debug\net6.0\mailToData.AssemblyInfo.cs
+C:\Users\PAT\source\repos\Human-Identification-from-Text-Messages\DataInMail\mailToData\mailToData\obj\Debug\net6.0\mailToData.csproj.CoreCompileInputs.cache
+C:\Users\PAT\source\repos\Human-Identification-from-Text-Messages\DataInMail\mailToData\mailToData\obj\Debug\net6.0\mailToData.dll
+C:\Users\PAT\source\repos\Human-Identification-from-Text-Messages\DataInMail\mailToData\mailToData\obj\Debug\net6.0\refint\mailToData.dll
+C:\Users\PAT\source\repos\Human-Identification-from-Text-Messages\DataInMail\mailToData\mailToData\obj\Debug\net6.0\mailToData.pdb
+C:\Users\PAT\source\repos\Human-Identification-from-Text-Messages\DataInMail\mailToData\mailToData\obj\Debug\net6.0\mailToData.genruntimeconfig.cache
+C:\Users\PAT\source\repos\Human-Identification-from-Text-Messages\DataInMail\mailToData\mailToData\obj\Debug\net6.0\ref\mailToData.dll
