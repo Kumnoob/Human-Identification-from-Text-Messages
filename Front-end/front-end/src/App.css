@@ -1,0 +1,62 @@
+body{
+  background-color: #394A6A;
+}
+.container {
+  margin: 0 auto;
+  width: 80%;
+}
+
+/* navbar css */
+
+nav {
+  background-color: #56ccf2;
+}
+
+.Row1 {
+  list-style-type: none;
+  text-align: center;
+  margin: 0;
+  padding: 1em;
+}
+
+.Col1 {
+  display: inline;
+  margin-bottom: 3%;
+}
+
+.Row1 .Col1 a {
+  color: black;
+  text-decoration: none;
+  padding: 5em;
+}
+
+.Row1 .Col1 a:hover {
+  color: white;
+}
+
+span {
+  padding-top: 5px;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+/* home page css */
+
+.searchField {
+  position: fixed;
+  border-radius: 10px;
+  width: 1236px;
+  height: 586px;
+  left: 50%;
+  top: 18%;
+  margin-left: -618px;
+  background-color: white;
+  text-align: center;
+  font-size: 20px;
+}
+
+.searchField p,h5{
+  text-align: left;
+  margin-left: 10vw;
+  margin-right: 10vw;
+}
