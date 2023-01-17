@@ -1,0 +1,18 @@
+.searchField3 {
+    position: fixed;
+    border-radius: 10px;
+    width: 1236px;
+    height: 586px;
+    left: 50%;
+    top: 18%;
+    margin-left: -618px;
+    background-color: white;
+    text-align: center;
+    font-size: 20px;
+  }
+  
+  .searchField3 p,h5{
+    text-align: left;
+    margin-left: 10vw;
+    margin-right: 10vw;
+  }

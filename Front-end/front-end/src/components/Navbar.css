@@ -1,0 +1,42 @@
+nav {
+    background-color: #56ccf2;
+  }
+  
+  .Row1 {
+    list-style-type: none;
+    text-align: center;
+    margin: 0;
+    padding: 1em;
+  }
+  
+  .Col1 {
+    display: inline;
+    margin-bottom: 3%;
+  }
+  
+  .black-icon {
+    color: black;
+    text-decoration: none;
+    padding: 5em;
+  }
+  .white-icon {
+    color: white;
+    text-decoration: none;
+    padding: 5em;
+  }
+  
+  .Row1 .Col1 a:hover {
+    color: white;
+  }
+  
+  span {
+    padding-top: 5px;
+    font-size: 20px;
+    margin-left: 10px;
+  }
+
+  .container {
+    margin: 0 auto;
+    width: 80%;
+    
+  }
