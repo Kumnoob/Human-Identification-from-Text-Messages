@@ -23,15 +23,15 @@ export default function Navbar() {
   };
 
   const handleSearchIconClick = () => {
-    setSearchIconActive(true);
     setHomeIconActive(false);
+    setSearchIconActive(true);
     setOrganizerIconActive(false);
   };
 
   const handleOrganizerIconClick = () => {
-    setOrganizerIconActive(true);
     setHomeIconActive(false);
     setSearchIconActive(false);
+    setOrganizerIconActive(true);
   };
 
   useEffect(() => {
@@ -76,7 +76,7 @@ export default function Navbar() {
         <div className="container">
           <Row className="Row1">
             <Col xl={2} lg={2} md={2}></Col>
-            <Col className="Col1">
+            <Col className={homeIconActive ? "Col-white" : "Col-black"}>
               <Link
                 to="/"
                 onClick={handleHomeIconClick}
@@ -90,7 +90,7 @@ export default function Navbar() {
                 </Row>
               </Link>
             </Col>
-            <Col className="Col1">
+            <Col className={searchIconActive ? "Col-white" : "Col-black"}>
               <Link
                 to="/search"
                 onClick={handleSearchIconClick}
@@ -104,7 +104,7 @@ export default function Navbar() {
                 </Row>
               </Link>
             </Col>
-            <Col className="Col1">
+            <Col className={organizerIconActive ? "Col-white" : "Col-black"}>
               <Link
                 to="/organizer"
                 onClick={handleOrganizerIconClick}

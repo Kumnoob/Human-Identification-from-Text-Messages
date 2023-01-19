@@ -1,7 +1,7 @@
 import React from 'react'
 import './HomePage.css'
 
-export default function homePage() {
+export default function HomePage() {
   return (
     <div className="searchField">
         <h2 style={{ marginTop: "50px" }}>

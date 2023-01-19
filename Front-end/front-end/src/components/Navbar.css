@@ -13,6 +13,15 @@ nav {
     display: inline;
     margin-bottom: 3%;
   }
+
+  .Col-black{
+    display: inline;
+    margin-bottom: 3%;
+  }
+  .Col-white {
+    display: inline;
+    margin-bottom: 3%;
+  }
   
   .black-icon {
     color: black;
@@ -24,9 +33,21 @@ nav {
     text-decoration: none;
     padding: 5em;
   }
-  
-  .Row1 .Col1 a:hover {
+
+  .Row1 .Col-black a:hover{
     color: white;
+  }
+  .Row1 .Col-white a:hover{
+    color: white;
+  }
+
+  .Row1 .Col-black:hover{
+    color: white;
+    transform: translateY(-5px);
+  }
+  .Row1 .Col-white:hover{
+    color: white;
+    transform: translateY(-5px);
   }
   
   span {
