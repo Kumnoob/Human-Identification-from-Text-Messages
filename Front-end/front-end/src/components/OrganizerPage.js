@@ -9,7 +9,7 @@ export default function OrganizerPage() {
     const interval = setInterval(() => {
       setImageId((prevImg) => {
         if (prevImg === 3) {
-          setImageId(1)
+          setImageId(1);
           return prevImg;
         }
         return prevImg + 1;
@@ -17,7 +17,6 @@ export default function OrganizerPage() {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
-
 
   useEffect(() => {
     console.log(imageId);
@@ -28,9 +27,7 @@ export default function OrganizerPage() {
       <h2 style={{ marginTop: "50px" }}>
         <strong>CE KMITL Project 2565</strong>
       </h2>
-      <h2 style={{ marginBottom: "20px" }}>
-        
-      </h2>
+      <h2 style={{ marginBottom: "20px" }}></h2>
 
       <img
         src={`http://127.0.0.1:5000/image/${imageId}`}

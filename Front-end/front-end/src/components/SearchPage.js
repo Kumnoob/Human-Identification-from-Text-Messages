@@ -2,13 +2,14 @@ import React from "react";
 import "./SearchPage.css";
 import { useState } from "react";
 import ProgressBar from "./ProgressBar";
+import { Col, Row } from "react-bootstrap";
 
 export default function SearchPage() {
   const [message, setMessage] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
   const [author, setAuthor] = useState("a");
 
-  // เช็คว่ามีแต่ภาษาอังกฤษเท่านั้นที่พิมพ์ได้
+  // เช็คว่ามีแต่ภาษาอังกฤษ / ตัวหนังสือ / space bar / enter เท่านั้นที่พิมพ์ได้
   const HandleChange = (event) => {
     const result = event.target.value.replace(/[^[a-zA-Z0-9._-\s]+$/gi, "");
     setMessage(result);
@@ -23,7 +24,7 @@ export default function SearchPage() {
   };
 
   // ส่งค่าไปที่ back-end(flask) และประมวณผลส่งข้อมูลกลับมา
-  const handleSubmit = (event, props) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     fetch("http://localhost:5000/search", {
       method: "POST",
@@ -49,24 +50,50 @@ export default function SearchPage() {
               marginBottom: "3vh",
               display: "flex",
               justifyContent: "center",
+              fontWeight:"bold"
             }}
           >
             บุคคลเจ้าของบทความที่ค้นหา
           </h2>
-          <img
-            src="https://api.lorem.space/image/face"
-            width={300}
-            height={300}
-          />
-          <h4>{author}</h4>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <ProgressBar done="70" />
-          </div>
+          <Row>
+            <Col xl={2} lg={2} md={2} sm={2}></Col>
+            <Col>
+              <img
+                src="https://api.lorem.space/image/face"
+                width={300}
+                height={300}
+                style={{borderRadius:"20px"}}
+              />
+              <h4 style={{fontWeight:"bold", marginTop:"3vh"}}>{author}</h4>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <ProgressBar done="75" />
+              </div>
+            </Col>
+            <Col>
+              <div style={{fontSize:"25px", marginBottom:"2vh", fontWeight:"bold"}}>บุคคลที่มีความคล้าย</div>
+              <div style={{fontSize:"20px"}}>1. {author}</div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <ProgressBar done="60" />
+              </div>
+              <div style={{fontSize:"20px"}}>2. {author}</div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <ProgressBar done="50" />
+              </div>
+              <div style={{fontSize:"20px"}}>3. {author}</div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <ProgressBar done="40" />
+              </div>
+              <div style={{fontSize:"20px"}}>4. {author}</div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <ProgressBar done="10" />
+              </div>
+            </Col>
+            <Col xl={2} lg={2} md={2} sm={2}></Col>
+          </Row>
 
           <div>
             <button
               className="buttonSearch"
-              type="submit"
               onClick={(e) => setIsSubmit(!isSubmit)}
             >
               ค้นหาอีกครั้ง
