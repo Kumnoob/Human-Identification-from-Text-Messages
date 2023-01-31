@@ -29,7 +29,7 @@ export default function OrganizerPage() {
         <strong>CE KMITL Project 2565</strong>
       </h2>
       <h2 style={{ marginBottom: "20px" }}>
-        <strong>สวัสดีครับผม</strong>
+        
       </h2>
 
       <img

@@ -73,6 +73,7 @@ export default function Navbar() {
   return (
     <div>
       <nav>
+        <img src="/kmitl_logo.png" width="159" height="67.5" style={{position: "absolute", right:"20px", top:"20px"}}/>
         <div className="container">
           <Row className="Row1">
             <Col xl={2} lg={2} md={2}></Col>
