@@ -2,6 +2,8 @@ from flask import Flask, send_file, request
 from flask_cors import CORS
 from pymongo import MongoClient
 import pathlib
+import json
+from bson.json_util import dumps, loads 
 
 
 app = Flask(__name__)
@@ -41,18 +43,29 @@ def predict():
 
         message = body["message"]
         messages.pop()
-        
         try:
-            authors = db.authors.find({'id': int(message)})
-            for author in authors:
-                for key, value in author.items():
-                    if (key == 'name'):
-                        return {"body": value, "id": message},201
+            authors = db.authors.find({"id": int(message)})
+            test = list(authors)
+            if(test == []):
+                return [{"id": "", "name": "", "text": ""}]
+            else:
+                return dumps(test)
         except ValueError:
             pass
     
-    return {"log": "message is being processed", "body": null}, 201
+    return {"log": "message is being processed", "id": null}, 201
 
+
+@app.route('/preview', methods=['GET'])
+def preview():
+    if request.method == 'GET':
+        try:
+            authors = list(db.authors.find({}))
+            test = list(authors)
+            print(test)
+            return dumps(test), 201
+        except ValueError:
+            pass
 
 if __name__ == '__main__':
 
