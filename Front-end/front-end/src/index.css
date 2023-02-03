@@ -1,0 +1,10 @@
+body {
+  margin: 0;
+  font-family: 'Kanit:wght@300', cursive;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: 'Kanit:wght@300', cursive;
+}

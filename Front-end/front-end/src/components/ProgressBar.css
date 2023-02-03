@@ -1,0 +1,29 @@
+.height{
+	height: 50px;
+}
+
+.progress {
+	background-color: #d8d8d8;
+	border-radius: 20px !important;
+	position: relative;
+	margin: 15px 0;
+	height: 30px !important;
+	width: 300px;
+}
+
+.progress-done {
+	/* background: linear-gradient(to left, #F2709C, #FF9472);
+	box-shadow: 0 3px 3px -5px #F2709C, 0 2px 5px #F2709C; */
+	background: linear-gradient(to left, #394A6A, #56ccf2);
+	box-shadow: 0 3px 3px -5px #394A6A, 0 2px 5px #394A6A;
+	border-radius: 20px;
+	font-size: 20px;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 0;
+	opacity: 0;
+	transition: 3s ease 0.3s;
+}
