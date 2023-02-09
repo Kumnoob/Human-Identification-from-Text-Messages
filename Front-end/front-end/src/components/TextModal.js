@@ -27,7 +27,7 @@ export default function TextModal(props) {
             : { backgroundColor: "gray", border: "0" }
         }
       >
-        <FontAwesomeIcon icon={faFileLines} st />
+        <FontAwesomeIcon icon={faFileLines}/>
       </Button>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>

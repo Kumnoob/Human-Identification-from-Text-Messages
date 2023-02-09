@@ -4,12 +4,15 @@ import { useState } from "react";
 import ProgressBar from "./ProgressBar";
 import { Col, Row } from "react-bootstrap";
 import Spinner from "./Spinner";
+import CompareModal from "./CompareModal";
 
 export default function SearchPage() {
   const [message, setMessage] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [author, setAuthor] = useState("");
+  const [text, setText] = useState("");
+  const [tempPer, setTempPer] = useState([80, 70, 20, 20, 10]);
 
   // เช็คว่ามีแต่ภาษาอังกฤษ / ตัวหนังสือ / space bar / enter เท่านั้นที่พิมพ์ได้
   const HandleChange = (event) => {
@@ -21,12 +24,20 @@ export default function SearchPage() {
   // setAuthor and log
   const authorDisplay = (data) => {
     setIsLoading(true);
-    console.log(data[0].name);
-    setAuthor(data[0].name);
-    console.log(data);
-    setIsSubmit(!isSubmit);
-    setIsLoading(false);
-    setIsLoading(false);
+    try {
+      tempPercent();
+      console.log(data[0].name);
+      setAuthor(data[0].name);
+      setText(data[0].text);
+      console.log(data);
+    } catch(error) {
+      throw(error)
+    } finally {
+      setIsSubmit(!isSubmit);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    }
   };
 
   // ส่งค่าไปที่ back-end(flask) และประมวณผลส่งข้อมูลกลับมา
@@ -44,6 +55,17 @@ export default function SearchPage() {
       .then((response) => response.json())
       .then((data) => authorDisplay(data))
       .catch((error) => console.error(error));
+  };
+
+  const tempPercent = () => {
+    const sum = tempPer.reduce((a, b) => a + b, 0);
+    const tmp = [];
+    console.log(sum);
+    for (let i = 0; i < tempPer.length; i++) {
+      tmp.push(parseInt((tempPer[i] = (tempPer[i] * 100) / sum)));
+      console.log(tempPer[i]);
+    }
+    setTempPer(tmp);
   };
 
   return (
@@ -70,9 +92,19 @@ export default function SearchPage() {
                 height={300}
                 style={{ borderRadius: "20px" }}
               />
-              <h4 style={{ fontWeight: "bold", marginTop: "3vh" }}>{author}</h4>
+              <h4
+                style={{
+                  fontWeight: "bold",
+                  marginTop: "3vh",
+                  lineHeight: "80%",
+                }}
+              >
+                1. {author}
+              </h4>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <ProgressBar done="75" />
+                <ProgressBar done={tempPer[0]} />
+                <div style={{ padding: "10px" }}></div>
+                <CompareModal message={message} text={text}/>
               </div>
             </Col>
             <Col>
@@ -85,21 +117,37 @@ export default function SearchPage() {
               >
                 บุคคลที่มีความคล้าย
               </div>
-              <div style={{ fontSize: "20px" }}>1. {author}</div>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <ProgressBar done="60" />
+              <div style={{ fontSize: "20px", lineHeight: "80%" }}>
+                2. {author}
               </div>
-              <div style={{ fontSize: "20px" }}>2. {author}</div>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <ProgressBar done="50" />
+                <ProgressBar done={tempPer[1]} />
+                <div style={{ padding: "10px" }}></div>
+                <CompareModal message={message} text={text}/>
               </div>
-              <div style={{ fontSize: "20px" }}>3. {author}</div>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <ProgressBar done="40" />
+              <div style={{ fontSize: "20px", lineHeight: "80%" }}>
+                3. {author}
               </div>
-              <div style={{ fontSize: "20px" }}>4. {author}</div>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <ProgressBar done="10" />
+                <ProgressBar done={tempPer[2]} />
+                <div style={{ padding: "10px" }}></div>
+                <CompareModal message={message} text={text}/>
+              </div>
+              <div style={{ fontSize: "20px", lineHeight: "80%" }}>
+                4. {author}
+              </div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <ProgressBar done={tempPer[3]} />
+                <div style={{ padding: "10px" }}></div>
+                <CompareModal message={message} text={text}/>
+              </div>
+              <div style={{ fontSize: "20px", lineHeight: "80%" }}>
+                5. {author}
+              </div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <ProgressBar done={tempPer[4]} />
+                <div style={{ padding: "10px" }}></div>
+                <CompareModal message={message} text={text}/>
               </div>
             </Col>
             <Col xl={2} lg={2} md={2} sm={2}></Col>

@@ -1,0 +1,30 @@
+.modal {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.modal-header .modal-title {
+  margin-left: 0;
+  font-weight: 600 !important;
+  padding: auto;
+}
+.modal-dialog{
+  max-width: 70vw !important;
+  overflow-wrap: break-word;
+}
+
+.row{
+  --bs-gutter-x: "none" !important;
+}
+
+.modal-compare {
+  position: relative;
+  margin: 15px 0;
+}
+
+.modal-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80%;
+}

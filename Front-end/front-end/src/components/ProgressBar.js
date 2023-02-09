@@ -5,23 +5,20 @@ import "./ProgressBar.css";
 export default function ProgressBar({ done }) {
   const [style, setStyle] = useState({});
   const [width, setWidth] = useState(true);
-  
 
   setTimeout(() => {
-
-    if(done < 20){
-      setWidth(false)
+    if (done < 20) {
+      setWidth(false);
     }
-
-    const newStyle = width ? {
-      opacity: 1,
-      width: `${done}%`,
-    } 
-    : {
-      opacity: 1,
-      width: `20%`,
-    };
-
+    const newStyle = width
+      ? {
+          opacity: 1,
+          width: `${done}%`,
+        }
+      : {
+          opacity: 1,
+          width: `20%`,
+        };
     setStyle(newStyle);
   }, 200);
 
