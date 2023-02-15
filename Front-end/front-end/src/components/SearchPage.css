@@ -20,7 +20,9 @@
 
 .inputBox {
   margin-top: 2rem;
-  width: 75%;
+  margin-left: 12.5%;
+  min-width: 80%;
+  max-width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;

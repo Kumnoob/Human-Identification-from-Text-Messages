@@ -39,6 +39,7 @@ def predict():
     null = ""
     if request.method == 'POST':
         body = request.get_json()
+        print(body)
         messages.append(body)
 
         message = body["message"]
