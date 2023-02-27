@@ -33,7 +33,7 @@ export default function TextModal(props) {
       </div>
       <div>
         <Modal isOpen={modal} toggle={toggle}>
-          <ModalHeader toggle={toggle}></ModalHeader>
+          <ModalHeader toggle={toggle}><div style={{textAlign:"left"}}>เปอร์เซ็นความเหมือน {props.realPercent * 100} %</div></ModalHeader>
           <Row>
             <Col
               xl={6}
@@ -44,6 +44,7 @@ export default function TextModal(props) {
                 textAlign: "center",
                 borderRight: "2px solid black",
                 borderBottom: "2px solid black",
+                borderTop: "2px solid black",
               }}
             >
               <div style={{ fontSize: "20px", margin: "20px 0 20px 0" }}>
@@ -55,17 +56,19 @@ export default function TextModal(props) {
               lg={6}
               md={6}
               sm={6}
-              style={{ textAlign: "center", borderBottom: "2px solid black" }}
+              style={{
+                textAlign: "center",
+                borderBottom: "2px solid black",
+                borderTop: "2px solid black",
+              }}
             >
-              <div
-                style={{ fontSize: "20px", margin: "20px 0 20px 0" }}
-              >
+              <div style={{ fontSize: "20px", margin: "20px 0 20px 0" }}>
                 ตัวอย่างบทความของคนที่ทำนาย
               </div>
             </Col>
           </Row>
           <Row>
-          <Col
+            <Col
               xl={6}
               lg={6}
               md={6}
@@ -73,22 +76,29 @@ export default function TextModal(props) {
               style={{
                 textAlign: "center",
                 borderRight: "2px solid black",
-                borderBottom: "2px solid black",
               }}
             >
-              <div style={{ textAlign:"left", fontSize: "20px", margin: "20px 0 20px 0", padding: "20px", border: "0px", display:"block" }}>
+              <div
+                style={{
+                  textAlign: "left",
+                  fontSize: "20px",
+                  margin: "20px 0 20px 0",
+                  padding: "20px",
+                  border: "0px",
+                  display: "block",
+                }}
+              >
                 {props.message}
               </div>
             </Col>
-            <Col
-              xl={6}
-              lg={6}
-              md={6}
-              sm={6}
-              style={{ textAlign: "center", borderBottom: "2px solid black" }}
-            >
+            <Col xl={6} lg={6} md={6} sm={6} style={{ textAlign: "center" }}>
               <div
-                style={{ textAlign:"left", fontSize: "20px", margin: "20px 0 20px 0", padding:"20px" }}
+                style={{
+                  textAlign: "left",
+                  fontSize: "20px",
+                  margin: "20px 0 20px 0",
+                  padding: "20px",
+                }}
               >
                 {props.text}
               </div>

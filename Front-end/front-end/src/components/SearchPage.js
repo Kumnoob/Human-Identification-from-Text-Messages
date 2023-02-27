@@ -1,9 +1,9 @@
 import React from "react";
 import "./SearchPage.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProgressBar from "./ProgressBar";
-import { Col, Row  } from "react-bootstrap";
-import { Button } from 'reactstrap';
+import { Col, Row } from "react-bootstrap";
+import { Button } from "reactstrap";
 import Spinner from "./Spinner";
 import CompareModal from "./CompareModal";
 
@@ -27,13 +27,14 @@ export default function SearchPage() {
   const [author5, setAuthor5] = useState("");
   const [text5, setText5] = useState("");
 
-  const [percent1, setpercent1] = useState();
-  const [percent2, setpercent2] = useState();
-  const [percent3, setpercent3] = useState();
-  const [percent4, setpercent4] = useState();
-  const [percent5, setpercent5] = useState();
+  const [percent, setPercent] = useState([]);
 
-  const [tempPer, setTempPer] = useState([80, 70, 50, 40, 40]);
+  const [realPer1, setrealPer1] = useState();
+  const [realPer2, setrealPer2] = useState();
+  const [realPer3, setrealPer3] = useState();
+  const [realPer4, setrealPer4] = useState();
+  const [realPer5, setrealPer5] = useState();
+
   const [model, setModel] = useState("Model1");
   const [model1Button, setModel1Button] = useState(true);
   const [model2Button, setModel2Button] = useState(false);
@@ -76,7 +77,6 @@ export default function SearchPage() {
     setModel4Button(true);
   };
 
-
   // เช็คว่ามีแต่ภาษาอังกฤษ / ตัวหนังสือ / space bar / enter เท่านั้นที่พิมพ์ได้
   const HandleChange = (event) => {
     const result = event.target.value.replace(/[^[a-zA-Z0-9._-\s]+$/gi, "");
@@ -85,18 +85,20 @@ export default function SearchPage() {
   };
 
   // setAuthor and log
-  const authorDisplay = (data) => {
+  const AuthorDisplay = (data) => {
     setIsLoading(true);
     try {
-      console.log("rank 1 is ", data[0][0].id, ".",  data[0][0].name);
+      console.log(data);
+
+      console.log("rank 1 is ", data[0][0].id, ".", data[0][0].name);
       setAuthor1(data[0][0].name);
       setText1(data[0][0].text);
 
-      console.log("rank 2 is ", data[1][0].id, ".",  data[1][0].name);
+      console.log("rank 2 is ", data[1][0].id, ".", data[1][0].name);
       setAuthor2(data[1][0].name);
       setText2(data[1][0].text);
 
-      console.log("rank 3 is ", data[2][0].id, ".",  data[2][0].name);
+      console.log("rank 3 is ", data[2][0].id, ".", data[2][0].name);
       setAuthor3(data[2][0].name);
       setText3(data[2][0].text);
 
@@ -104,25 +106,37 @@ export default function SearchPage() {
       setAuthor4(data[3][0].name);
       setText4(data[3][0].text);
 
-      console.log("rank 5 is ", data[4][0].id, ".",  data[4][0].name);
+      console.log("rank 5 is ", data[4][0].id, ".", data[4][0].name);
       setAuthor5(data[4][0].name);
       setText5(data[4][0].text);
+      const a = data[5][0];
+      const b = data[5][1];
+      const c = data[5][2];
+      const d = data[5][3];
+      const e = data[5][4];
 
-      setpercent1(parseInt(data[5][0] * 10000));
-      setpercent2(parseInt(data[5][1] * 10000));
-      setpercent3(parseInt(data[5][2] * 10000));
-      setpercent4(parseInt(data[5][3] * 10000));
-      setpercent5(parseInt(data[5][4] * 10000));
-      console.log(tempPer)
-      console.log(percent1);
-      console.log(percent2);
-      console.log(percent3);
-      console.log(percent4);
-      console.log(percent5);
-      setTempPer([percent1, percent2, percent3, percent4, percent5])
-      tempPercent();
+      setrealPer1(a);
+      setrealPer2(b);
+      setrealPer3(c);
+      setrealPer4(d);
+      setrealPer5(e);
 
-      console.log(data);
+      const sum = a + b + c + d + e;
+
+      const per1 = a * 100/sum;
+      const per2 = b * 100/sum;
+      const per3 = c * 100/sum;
+      const per4 = d * 100/sum;
+      const per5 = e * 100/sum;
+
+      percent.push(parseInt(per1));
+      percent.push(parseInt(per2));
+      percent.push(parseInt(per3));
+      percent.push(parseInt(per4));
+      percent.push(parseInt(per5));
+
+
+      console.log(percent)
     } catch (error) {
       throw error;
     } finally {
@@ -147,20 +161,14 @@ export default function SearchPage() {
       }),
     })
       .then((response) => response.json())
-      .then((data) => authorDisplay(data))
+      .then((data) => AuthorDisplay(data))
       .catch((error) => console.error(error));
   };
 
-  const tempPercent = () => {
-    const sum = tempPer.reduce((a, b) => a + b, 0);
-    const tmp = [];
-    console.log(sum);
-    for (let i = 0; i < tempPer.length; i++) {
-      tmp.push(parseInt((tempPer[i] = (tempPer[i] * 100) / sum)));
-      console.log(tempPer[i]);
-    }
-    setTempPer(tmp);
-  };
+  const resetSubmit = () => {
+      setIsSubmit(!isSubmit)
+      setPercent([])
+  }
 
   return (
     <div className="searchField2">
@@ -196,9 +204,9 @@ export default function SearchPage() {
                 1. {author1}
               </h4>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <ProgressBar done={tempPer[0]} />
+                <ProgressBar done={percent[0]} />
                 <div style={{ padding: "10px" }}></div>
-                <CompareModal message={message} text={text1} />
+                <CompareModal realPercent={realPer1} message={message} text={text1} />
               </div>
             </Col>
             <Col>
@@ -215,33 +223,33 @@ export default function SearchPage() {
                 2. {author2}
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <ProgressBar done={tempPer[1]} />
+                <ProgressBar done={percent[1]} />
                 <div style={{ padding: "10px" }}></div>
-                <CompareModal message={message} text={text2} />
+                <CompareModal realPercent={realPer2} message={message} text={text2} />
               </div>
               <div style={{ fontSize: "20px", lineHeight: "80%" }}>
                 3. {author3}
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <ProgressBar done={tempPer[2]} />
+                <ProgressBar done={percent[2]} />
                 <div style={{ padding: "10px" }}></div>
-                <CompareModal message={message} text={text3} />
+                <CompareModal realPercent={realPer3} message={message} text={text3} />
               </div>
               <div style={{ fontSize: "20px", lineHeight: "80%" }}>
                 4. {author4}
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <ProgressBar done={tempPer[3]} />
+                <ProgressBar done={percent[3]} />
                 <div style={{ padding: "10px" }}></div>
-                <CompareModal message={message} text={text4} />
+                <CompareModal realPercent={realPer4} message={message} text={text4} />
               </div>
               <div style={{ fontSize: "20px", lineHeight: "80%" }}>
                 5. {author5}
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <ProgressBar done={tempPer[4]} />
+                <ProgressBar done={percent[4]} />
                 <div style={{ padding: "10px" }}></div>
-                <CompareModal message={message} text={text5} />
+                <CompareModal realPercent={realPer5} message={message} text={text5} />
               </div>
             </Col>
             <Col xl={2} lg={2} md={2} sm={2}></Col>
@@ -250,7 +258,7 @@ export default function SearchPage() {
           <div>
             <button
               className="buttonSearch"
-              onClick={() => setIsSubmit(!isSubmit)}
+              onClick={() => resetSubmit()}
             >
               ค้นหาอีกครั้ง
             </button>
@@ -277,17 +285,45 @@ export default function SearchPage() {
                 ></textarea>
               </Col>
               <Col xl={1} lg={1} md={1} sm={1}>
-                <Row style={{marginTop:"45px"}}>
-                <Button color={model1Button?"primary":"secondary"} style={{width:"80%",height:"50px"}} value={"Model1"} onClick={(e) => handleModel1ButtonClick(e,"value")}>Model 1</Button>
+                <Row style={{ marginTop: "45px" }}>
+                  <Button
+                    color={model1Button ? "primary" : "secondary"}
+                    style={{ width: "80%", height: "50px" }}
+                    value={"Model1"}
+                    onClick={(e) => handleModel1ButtonClick(e, "value")}
+                  >
+                    Model 1
+                  </Button>
                 </Row>
-                <Row style={{marginTop:"20px"}}>
-                <Button color={model2Button?"primary":"secondary"} style={{width:"80%",height:"50px"}} value={"Model2"} onClick={(e) => handleModel2ButtonClick(e,"value")}>Model 2</Button>
+                <Row style={{ marginTop: "20px" }}>
+                  <Button
+                    color={model2Button ? "primary" : "secondary"}
+                    style={{ width: "80%", height: "50px" }}
+                    value={"Model2"}
+                    onClick={(e) => handleModel2ButtonClick(e, "value")}
+                  >
+                    Model 2
+                  </Button>
                 </Row>
-                <Row style={{marginTop:"20px"}}>
-                <Button color={model3Button?"primary":"secondary"} style={{width:"80%",height:"50px"}} value={"Model3"} onClick={(e) => handleModel3ButtonClick(e,"value")}>Model 3</Button>
+                <Row style={{ marginTop: "20px" }}>
+                  <Button
+                    color={model3Button ? "primary" : "secondary"}
+                    style={{ width: "80%", height: "50px" }}
+                    value={"Model3"}
+                    onClick={(e) => handleModel3ButtonClick(e, "value")}
+                  >
+                    Model 3
+                  </Button>
                 </Row>
-                <Row style={{marginTop:"20px"}}>
-                <Button color={model4Button?"primary":"secondary"} style={{width:"80%",height:"50px"}} value={"Model4"} onClick={(e) => handleModel4ButtonClick(e,"value")}>Model 4</Button>
+                <Row style={{ marginTop: "20px" }}>
+                  <Button
+                    color={model4Button ? "primary" : "secondary"}
+                    style={{ width: "80%", height: "50px" }}
+                    value={"Model4"}
+                    onClick={(e) => handleModel4ButtonClick(e, "value")}
+                  >
+                    Model 4
+                  </Button>
                 </Row>
               </Col>
               <Col xl={1} lg={1} md={1} sm={1}></Col>
