@@ -11,9 +11,29 @@ export default function SearchPage() {
   const [message, setMessage] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [author, setAuthor] = useState("");
-  const [text, setText] = useState("");
-  const [tempPer, setTempPer] = useState([80, 70, 20, 20, 10]);
+
+  const [author1, setAuthor1] = useState("");
+  const [text1, setText1] = useState("");
+
+  const [author2, setAuthor2] = useState("");
+  const [text2, setText2] = useState("");
+
+  const [author3, setAuthor3] = useState("");
+  const [text3, setText3] = useState("");
+
+  const [author4, setAuthor4] = useState("");
+  const [text4, setText4] = useState("");
+
+  const [author5, setAuthor5] = useState("");
+  const [text5, setText5] = useState("");
+
+  const [percent1, setpercent1] = useState();
+  const [percent2, setpercent2] = useState();
+  const [percent3, setpercent3] = useState();
+  const [percent4, setpercent4] = useState();
+  const [percent5, setpercent5] = useState();
+
+  const [tempPer, setTempPer] = useState([80, 70, 50, 40, 40]);
   const [model, setModel] = useState("Model1");
   const [model1Button, setModel1Button] = useState(true);
   const [model2Button, setModel2Button] = useState(false);
@@ -68,10 +88,40 @@ export default function SearchPage() {
   const authorDisplay = (data) => {
     setIsLoading(true);
     try {
+      console.log("rank 1 is ", data[0][0].id, ".",  data[0][0].name);
+      setAuthor1(data[0][0].name);
+      setText1(data[0][0].text);
+
+      console.log("rank 2 is ", data[1][0].id, ".",  data[1][0].name);
+      setAuthor2(data[1][0].name);
+      setText2(data[1][0].text);
+
+      console.log("rank 3 is ", data[2][0].id, ".",  data[2][0].name);
+      setAuthor3(data[2][0].name);
+      setText3(data[2][0].text);
+
+      console.log("rank 4 is ", data[3][0].id, ".", data[3][0].name);
+      setAuthor4(data[3][0].name);
+      setText4(data[3][0].text);
+
+      console.log("rank 5 is ", data[4][0].id, ".",  data[4][0].name);
+      setAuthor5(data[4][0].name);
+      setText5(data[4][0].text);
+
+      setpercent1(parseInt(data[5][0] * 10000));
+      setpercent2(parseInt(data[5][1] * 10000));
+      setpercent3(parseInt(data[5][2] * 10000));
+      setpercent4(parseInt(data[5][3] * 10000));
+      setpercent5(parseInt(data[5][4] * 10000));
+      console.log(tempPer)
+      console.log(percent1);
+      console.log(percent2);
+      console.log(percent3);
+      console.log(percent4);
+      console.log(percent5);
+      setTempPer([percent1, percent2, percent3, percent4, percent5])
       tempPercent();
-      console.log(data[0].name);
-      setAuthor(data[0].name);
-      setText(data[0].text);
+
       console.log(data);
     } catch (error) {
       throw error;
@@ -143,12 +193,12 @@ export default function SearchPage() {
                   lineHeight: "80%",
                 }}
               >
-                1. {author}
+                1. {author1}
               </h4>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <ProgressBar done={tempPer[0]} />
                 <div style={{ padding: "10px" }}></div>
-                <CompareModal message={message} text={text} />
+                <CompareModal message={message} text={text1} />
               </div>
             </Col>
             <Col>
@@ -162,36 +212,36 @@ export default function SearchPage() {
                 บุคคลที่มีความคล้าย
               </div>
               <div style={{ fontSize: "20px", lineHeight: "80%" }}>
-                2. {author}
+                2. {author2}
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <ProgressBar done={tempPer[1]} />
                 <div style={{ padding: "10px" }}></div>
-                <CompareModal message={message} text={text} />
+                <CompareModal message={message} text={text2} />
               </div>
               <div style={{ fontSize: "20px", lineHeight: "80%" }}>
-                3. {author}
+                3. {author3}
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <ProgressBar done={tempPer[2]} />
                 <div style={{ padding: "10px" }}></div>
-                <CompareModal message={message} text={text} />
+                <CompareModal message={message} text={text3} />
               </div>
               <div style={{ fontSize: "20px", lineHeight: "80%" }}>
-                4. {author}
+                4. {author4}
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <ProgressBar done={tempPer[3]} />
                 <div style={{ padding: "10px" }}></div>
-                <CompareModal message={message} text={text} />
+                <CompareModal message={message} text={text4} />
               </div>
               <div style={{ fontSize: "20px", lineHeight: "80%" }}>
-                5. {author}
+                5. {author5}
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <ProgressBar done={tempPer[4]} />
                 <div style={{ padding: "10px" }}></div>
-                <CompareModal message={message} text={text} />
+                <CompareModal message={message} text={text5} />
               </div>
             </Col>
             <Col xl={2} lg={2} md={2} sm={2}></Col>
