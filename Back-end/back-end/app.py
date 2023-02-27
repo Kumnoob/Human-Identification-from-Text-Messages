@@ -1,10 +1,19 @@
 from flask import Flask, send_file, request
+import numpy as np
+import io
 from flask_cors import CORS
 from pymongo import MongoClient
 import pathlib
 import json
-from bson.json_util import dumps, loads 
+from bson.json_util import dumps, loads
+from keras.models import load_model
+import tensorflow as tf
+from keras_preprocessing.text import Tokenizer
+from keras_preprocessing.sequence import pad_sequences
 
+model = load_model('lstm_model.h5')
+
+print("tensorflow is running in version:",tf.__version__)
 
 app = Flask(__name__)
 CORS(app)
@@ -44,8 +53,41 @@ def predict():
 
         message = body["message"]
         messages.pop()
+
+        # Example input string
+        input_string = message
+
+        # Initialize a tokenizer with a vocabulary size of 1000
+        tokenizer = Tokenizer(num_words=1000)
+
+        # Fit the tokenizer on the input string
+        tokenizer.fit_on_texts([input_string])
+
+        # Convert the input string to a sequence of integers
+        input_sequence = tokenizer.texts_to_sequences([input_string])
+
+        # Pad the sequence to length 100 (if it is shorter than 100) or truncate it (if it is longer than 100)
+        max_sequence_length = 1
+        padded_input_sequence = pad_sequences(input_sequence, maxlen=max_sequence_length, padding='post', truncating='post')
+
+        # Convert the padded sequence to a NumPy array
+        input_data = np.array(padded_input_sequence)
+
+        # Embed the input data using an embedding layer with 300 dimensions
+        from keras.layers import Embedding
+        embedding_layer = Embedding(input_dim=1000, output_dim=300, input_length=max_sequence_length)
+        embedded_input_data = embedding_layer(input_data)
+
+        # Make predictions on the embedded input data
+        prediction = model.predict(embedded_input_data)
+
+        class_label = np.argmax(prediction, axis=1)
+        
+        # print(str(prediction))
+        print(int(class_label))
+
         try:
-            authors = db.authors.find({"id": int(message)})
+            authors = db.authors.find({"id": int(class_label)})
             test = list(authors)
             if(test == []):
                 return [{"id": "", "name": "", "text": ""}]
