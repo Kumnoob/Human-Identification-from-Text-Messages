@@ -123,11 +123,11 @@ export default function SearchPage() {
 
       const sum = a + b + c + d + e;
 
-      const per1 = a * 100/sum;
-      const per2 = b * 100/sum;
-      const per3 = c * 100/sum;
-      const per4 = d * 100/sum;
-      const per5 = e * 100/sum;
+      const per1 = (a * 100) / sum;
+      const per2 = (b * 100) / sum;
+      const per3 = (c * 100) / sum;
+      const per4 = (d * 100) / sum;
+      const per5 = (e * 100) / sum;
 
       percent.push(parseInt(per1));
       percent.push(parseInt(per2));
@@ -135,8 +135,7 @@ export default function SearchPage() {
       percent.push(parseInt(per4));
       percent.push(parseInt(per5));
 
-
-      console.log(percent)
+      console.log(percent);
     } catch (error) {
       throw error;
     } finally {
@@ -166,12 +165,12 @@ export default function SearchPage() {
   };
 
   const resetSubmit = () => {
-      setIsSubmit(!isSubmit)
-      setPercent([])
-  }
+    setIsSubmit(!isSubmit);
+    setPercent([]);
+  };
 
   return (
-    <div className="searchField2">
+    <div className="searchField2" style={isLoading?{height:"593px"}:{}}>
       {isSubmit && !isLoading ? (
         <div>
           <h2
@@ -186,7 +185,7 @@ export default function SearchPage() {
             บุคคลเจ้าของบทความที่ค้นหา
           </h2>
           <Row>
-            <Col xl={2} lg={2} md={2} sm={2}></Col>
+            <Col xl={2} lg={2} md={2} sm={0}></Col>
             <Col>
               <img
                 src="https://api.lorem.space/image/face"
@@ -206,7 +205,11 @@ export default function SearchPage() {
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <ProgressBar done={percent[0]} />
                 <div style={{ padding: "10px" }}></div>
-                <CompareModal realPercent={realPer1} message={message} text={text1} />
+                <CompareModal
+                  realPercent={realPer1}
+                  message={message}
+                  text={text1}
+                />
               </div>
             </Col>
             <Col>
@@ -225,7 +228,11 @@ export default function SearchPage() {
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <ProgressBar done={percent[1]} />
                 <div style={{ padding: "10px" }}></div>
-                <CompareModal realPercent={realPer2} message={message} text={text2} />
+                <CompareModal
+                  realPercent={realPer2}
+                  message={message}
+                  text={text2}
+                />
               </div>
               <div style={{ fontSize: "20px", lineHeight: "80%" }}>
                 3. {author3}
@@ -233,7 +240,11 @@ export default function SearchPage() {
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <ProgressBar done={percent[2]} />
                 <div style={{ padding: "10px" }}></div>
-                <CompareModal realPercent={realPer3} message={message} text={text3} />
+                <CompareModal
+                  realPercent={realPer3}
+                  message={message}
+                  text={text3}
+                />
               </div>
               <div style={{ fontSize: "20px", lineHeight: "80%" }}>
                 4. {author4}
@@ -241,7 +252,11 @@ export default function SearchPage() {
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <ProgressBar done={percent[3]} />
                 <div style={{ padding: "10px" }}></div>
-                <CompareModal realPercent={realPer4} message={message} text={text4} />
+                <CompareModal
+                  realPercent={realPer4}
+                  message={message}
+                  text={text4}
+                />
               </div>
               <div style={{ fontSize: "20px", lineHeight: "80%" }}>
                 5. {author5}
@@ -249,16 +264,21 @@ export default function SearchPage() {
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <ProgressBar done={percent[4]} />
                 <div style={{ padding: "10px" }}></div>
-                <CompareModal realPercent={realPer5} message={message} text={text5} />
+                <CompareModal
+                  realPercent={realPer5}
+                  message={message}
+                  text={text5}
+                />
               </div>
             </Col>
-            <Col xl={2} lg={2} md={2} sm={2}></Col>
+            <Col xl={2} lg={2} md={2} sm={0}></Col>
           </Row>
 
           <div>
             <button
               className="buttonSearch"
               onClick={() => resetSubmit()}
+              style={{ marginBottom: "20px" }}
             >
               ค้นหาอีกครั้ง
             </button>
@@ -288,7 +308,7 @@ export default function SearchPage() {
                 <Row style={{ marginTop: "45px" }}>
                   <Button
                     color={model1Button ? "primary" : "secondary"}
-                    style={{ width: "80%", height: "50px" }}
+                    style={{ width: "80%", height: "50px", margin: "0 auto" }}
                     value={"Model1"}
                     onClick={(e) => handleModel1ButtonClick(e, "value")}
                   >
@@ -298,7 +318,7 @@ export default function SearchPage() {
                 <Row style={{ marginTop: "20px" }}>
                   <Button
                     color={model2Button ? "primary" : "secondary"}
-                    style={{ width: "80%", height: "50px" }}
+                    style={{ width: "80%", height: "50px", margin: "0 auto" }}
                     value={"Model2"}
                     onClick={(e) => handleModel2ButtonClick(e, "value")}
                   >
@@ -308,7 +328,7 @@ export default function SearchPage() {
                 <Row style={{ marginTop: "20px" }}>
                   <Button
                     color={model3Button ? "primary" : "secondary"}
-                    style={{ width: "80%", height: "50px" }}
+                    style={{ width: "80%", height: "50px", margin: "0 auto" }}
                     value={"Model3"}
                     onClick={(e) => handleModel3ButtonClick(e, "value")}
                   >
@@ -318,7 +338,7 @@ export default function SearchPage() {
                 <Row style={{ marginTop: "20px" }}>
                   <Button
                     color={model4Button ? "primary" : "secondary"}
-                    style={{ width: "80%", height: "50px" }}
+                    style={{ width: "80%", height: "50px", margin: "0 auto" }}
                     value={"Model4"}
                     onClick={(e) => handleModel4ButtonClick(e, "value")}
                   >
@@ -330,7 +350,11 @@ export default function SearchPage() {
             </Row>
 
             <div>
-              <button className="buttonSearch" type="submit">
+              <button
+                className="buttonSearch"
+                type="submit"
+                style={{ marginBottom: "20px" }}
+              >
                 ค้นหาบุคคล
               </button>
             </div>

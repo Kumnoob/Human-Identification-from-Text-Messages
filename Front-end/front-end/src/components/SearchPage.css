@@ -2,7 +2,7 @@
   position: fixed;
   border-radius: 10px;
   width: 1236px;
-  height: 586px;
+  /* height: 586px; */
   left: 50%;
   top: 18%;
   margin-left: -618px;
@@ -37,4 +37,19 @@
   color: white;
   border: 0;
   margin-top: 2vh;
+}
+
+@media only screen and (max-width: 1024px) {
+  .searchField2 {
+    position: relative;
+    margin: 0 auto;
+    left: 0;
+    border-radius: 0px;
+    width: 100vw;
+    height: 120%;
+    background-color: white;
+    text-align: center;
+    font-size: 20px;
+    overflow-x: hidden;
+  }
 }
