@@ -1,11 +1,12 @@
 import React from "react";
 import "./SearchPage.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ProgressBar from "./ProgressBar";
 import { Col, Row } from "react-bootstrap";
 import { Button } from "reactstrap";
 import Spinner from "./Spinner";
 import CompareModal from "./CompareModal";
+import ExampleModal from "./ExampleModal";
 
 export default function SearchPage() {
   const [message, setMessage] = useState("");
@@ -349,15 +350,22 @@ export default function SearchPage() {
               <Col xl={1} lg={1} md={1} sm={1}></Col>
             </Row>
 
-            <div>
-              <button
-                className="buttonSearch"
-                type="submit"
-                style={{ marginBottom: "20px" }}
-              >
-                ค้นหาบุคคล
-              </button>
-            </div>
+            <Row>
+              <Col xl={4} lg={4} md={4} sm={4}></Col>
+              <Col xl={3} lg={3} md={12} sm={12}>
+                <button
+                  className="buttonSearch"
+                  type="submit"
+                  style={{ marginBottom: "20px" }}
+                >
+                  ค้นหาบุคคล
+                </button>
+              </Col>
+              <Col xl={1} lg={1} md={12} sm={12} style={{alignSelf:"center"}}>
+                <ExampleModal/>
+              </Col>
+              <Col xl={4} lg={4} md={4} sm={4}></Col>
+            </Row>
           </form>
         </div>
       ) : (

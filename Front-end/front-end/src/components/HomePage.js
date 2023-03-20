@@ -8,7 +8,7 @@ import Spinner from "./Spinner";
 export default function HomePage() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const authorDisplay = (data) => {
+  const AuthorDisplay = (data) => {
     console.log(data);
     setData(data);
     setIsLoading(true);
@@ -21,7 +21,7 @@ export default function HomePage() {
         method: "GET",
       })
         .then((response) => response.json())
-        .then((data) => authorDisplay(data))
+        .then((data) => AuthorDisplay(data))
         .catch((error) => console.error(error));
     };
     fetchAuthor();

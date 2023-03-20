@@ -1,4 +1,4 @@
-from flask import Flask, send_file, request
+from flask import Flask, send_file, request, jsonify
 import numpy as np
 import io
 from flask_cors import CORS
@@ -147,12 +147,33 @@ def preview():
     if request.method == 'GET':
         try:
             authors = list(db.authors.find({}))
-            test = list(authors)
-            print(test)
-            return dumps(test), 201
+            res = list(authors)
+            print(res)
+            return dumps(res), 201
         except ValueError:
             pass
 
 
+@app.route('/example', methods=['GET'])
+def example():
+    if request.method == 'GET':
+        try:
+            collection = client['mydb']['examples']
+    
+            # Execute the aggregation pipeline
+            randExample = []
+            for i in range(1,110):
+                pipeline = [
+                    { "$match": { "id": i } },
+                    { "$sample": { "size": 1} }
+                ]
+                res = list(collection.aggregate(pipeline))
+                randExample.append(res)
+
+            print(randExample)
+            return dumps(randExample), 201
+        except ValueError:
+            pass
+        
 if __name__ == '__main__':
     app.run()
