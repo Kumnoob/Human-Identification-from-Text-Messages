@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
-import { useState } from "react";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { useState, useRef } from "react";
 import "./TextModal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileLines } from "@fortawesome/free-solid-svg-icons";
@@ -8,11 +8,24 @@ import { faFileLines } from "@fortawesome/free-solid-svg-icons";
 export default function TextModal(props) {
   const [modal, setmodal] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const textRef = useRef(null);
 
   const toggle = (event) => {
     event.preventDefault();
     setmodal(!modal);
     toggle.bind();
+  };
+
+  const handleCopy = () => {
+    if (textRef.current !== null) {
+      const range = document.createRange();
+      range.selectNode(textRef.current);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      alert("คัดลอกบทความแล้ว")
+    }
   };
 
   return (
@@ -33,7 +46,8 @@ export default function TextModal(props) {
         <ModalHeader toggle={toggle}>
           ตัวอย่างบทความของ <br /> {props.id}. {props.name}
         </ModalHeader>
-        <ModalBody>{props.text}</ModalBody>
+        <ModalBody><div ref={textRef} id="copy">{props.text}</div></ModalBody>
+        <ModalFooter><button type="button" class="btn btn-primary" onClick={handleCopy}>คัดลอกบทความ</button></ModalFooter>
       </Modal>
     </div>
   );
