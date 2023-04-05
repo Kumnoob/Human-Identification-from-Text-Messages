@@ -47,6 +47,11 @@ def image(image_id):
     # code to determine the path of the image based on image_id
     return send_file(pathlib.Path("basleng"+image_id+".jpg").resolve(), mimetype='image/jpg')
 
+@app.route('/organizer/<organizer_id>')
+def organizer(organizer_id):
+    # code to determine the path of the image based on image_id
+    return send_file(pathlib.Path(organizer_id+".jpg").resolve(), mimetype='image/jpg')
+
 # POST METHOD
 @app.route('/search', methods=['POST'])
 def predict():

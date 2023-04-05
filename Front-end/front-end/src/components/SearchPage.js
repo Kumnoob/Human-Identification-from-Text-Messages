@@ -171,20 +171,23 @@ export default function SearchPage() {
   };
 
   return (
-    <div className="searchField2" style={isLoading?{height:"593px"}:{}}>
+    <div className="searchField2" style={isLoading ? { height: "593px" } : {}}>
       {isSubmit && !isLoading ? (
         <div>
-          <h2
-            style={{
-              marginTop: "3vh",
-              marginBottom: "3vh",
-              display: "flex",
-              justifyContent: "center",
-              fontWeight: "bold",
-            }}
-          >
-            บุคคลเจ้าของบทความที่ค้นหา
-          </h2>
+          <Col xm={12} xs={12}>
+            <h2
+              style={{
+                marginTop: "3vh",
+                marginBottom: "3vh",
+                display: "flex",
+                justifyContent: "center",
+                fontWeight: "bold",
+              }}
+            >
+              บุคคลเจ้าของบทความที่ค้นหา
+            </h2>
+          </Col>
+
           <Row>
             <Col xl={2} lg={2} md={2} sm={0}></Col>
             <Col>
@@ -288,7 +291,7 @@ export default function SearchPage() {
       ) : !isSubmit && !isLoading ? (
         <div>
           <form onSubmit={handleSubmit}>
-            <h2 style={{ marginTop: "3vh" }}>บทความ</h2>
+            <h2 style={{ marginTop: "3vh", marginLeft:"170px" }}>บทความ</h2>
             <Row>
               <Col xl={10} lg={10} md={10} sm={10}>
                 <textarea
@@ -361,8 +364,14 @@ export default function SearchPage() {
                   ค้นหาบุคคล
                 </button>
               </Col>
-              <Col xl={1} lg={1} md={12} sm={12} style={{alignSelf:"center"}}>
-                <ExampleModal/>
+              <Col
+                xl={1}
+                lg={1}
+                md={12}
+                sm={12}
+                style={{ alignSelf: "center" }}
+              >
+                <ExampleModal />
               </Col>
               <Col xl={4} lg={4} md={4} sm={4}></Col>
             </Row>
