@@ -34,7 +34,7 @@ export default function OrganizerPage() {
           <img
             src={`http://127.0.0.1:5000/organizer/${62010604}`}
             alt="image"
-            style={{ width: "20vw", borderRadius:"20px", boxShadow: "5px 10px 20px 0px #394A6A" }}
+            style={{ width: "20vw", height: "20vw", borderRadius:"20px", boxShadow: "5px 10px 20px 0px #394A6A" }}
           />
           <h4 style={{textAlign:"center" , marginTop:"30px"}}>นายพลภัทร จงวัฒนศิริ 62010604</h4>
         </Col>
@@ -42,7 +42,7 @@ export default function OrganizerPage() {
           <img
             src={`http://127.0.0.1:5000/organizer/${62010785}`}
             alt="image"
-            style={{ width: "20vw" }}
+            style={{ width: "15vw", height: "20vw", borderRadius:"20px", boxShadow: "5px 10px 20px 0px #394A6A" }}
           />
           <h4 style={{textAlign:"center", marginTop:"30px"}}>นายลิขิตภูมิ ลิขิตงาม 62010785</h4>
         </Col>

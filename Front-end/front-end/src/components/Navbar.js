@@ -9,66 +9,23 @@ import { Row, Col } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 export default function Navbar() {
   const [homeIconActive, setHomeIconActive] = useState(false);
   const [searchIconActive, setSearchIconActive] = useState(false);
   const [organizerIconActive, setOrganizerIconActive] = useState(false);
-
-  const handleHomeIconClick = () => {
-    setHomeIconActive(true);
-    setSearchIconActive(false);
-    setOrganizerIconActive(false);
-    
-  };
-
-  const handleSearchIconClick = () => {
-    setHomeIconActive(false);
-    setSearchIconActive(true);
-    setOrganizerIconActive(false);
-  };
-
-  const handleOrganizerIconClick = () => {
-    setHomeIconActive(false);
-    setSearchIconActive(false);
-    setOrganizerIconActive(true);
-  };
-
+  const { pathname } = useLocation();
+  
   useEffect(() => {
-    console.log("homeIconActive", homeIconActive);
-  }, [homeIconActive]);
+    const storedValue1 = localStorage.getItem('homeIconActive') === 'true';
+    const storedValue2 = localStorage.getItem('searchIconActive') === 'true';
+    const storedValue3 = localStorage.getItem('organizerIconActive') === 'true';
 
-  useEffect(() => {
-    console.log("searchIconActive", searchIconActive);
-  }, [searchIconActive]);
-
-  useEffect(() => {
-    console.log("organizerIconActive", organizerIconActive);
-  }, [organizerIconActive]);
-
-  useEffect(() => {
-    window.localStorage.setItem('homeIconActive', JSON.stringify(homeIconActive));
-  }, [homeIconActive]);
-
-  useEffect(() => {
-    window.localStorage.setItem('searchIconActive', JSON.stringify(searchIconActive));
-  }, [searchIconActive]);
-
-  useEffect(() => {
-    window.localStorage.setItem('organizerIconActive', JSON.stringify(organizerIconActive));
-  }, [organizerIconActive]);
-
-  useEffect(() => {
-    const data = window.localStorage.getItem('homeIconActive');
-    if ( data !== null ) setHomeIconActive(JSON.parse(data));
-
-    const data2 = window.localStorage.getItem('searchIconActive');
-    if ( data2 !== null ) setSearchIconActive(JSON.parse(data2));
-
-    const data3 = window.localStorage.getItem('organizerIconActive');
-    if ( data3 !== null ) setOrganizerIconActive(JSON.parse(data3));
-
-  }, []);
+    setHomeIconActive(pathname === '/' ? true : storedValue1);
+    setSearchIconActive(pathname === '/search' ? true : storedValue2);
+    setOrganizerIconActive(pathname === '/organizer' ? true : storedValue3);
+  }, [pathname]);
 
   return (
     <div>
@@ -80,7 +37,6 @@ export default function Navbar() {
             <Col className={homeIconActive ? "Col-white" : "Col-black"}>
               <Link
                 to="/"
-                onClick={handleHomeIconClick}
                 className={homeIconActive ? "white-icon" : "black-icon"}
               >
                 <Row>
@@ -94,7 +50,6 @@ export default function Navbar() {
             <Col className={searchIconActive ? "Col-white" : "Col-black"}>
               <Link
                 to="/search"
-                onClick={handleSearchIconClick}
                 className={searchIconActive ? "white-icon" : "black-icon"}
               >
                 <Row>
@@ -108,7 +63,6 @@ export default function Navbar() {
             <Col className={organizerIconActive ? "Col-white" : "Col-black"}>
               <Link
                 to="/organizer"
-                onClick={handleOrganizerIconClick}
                 className={organizerIconActive ? "white-icon" : "black-icon"}
               >
                 <Row>
