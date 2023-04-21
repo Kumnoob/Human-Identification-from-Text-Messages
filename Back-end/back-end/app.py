@@ -1,6 +1,6 @@
 from flask import Flask, send_file, request, jsonify
 import numpy as np
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
 import pathlib
 import json
@@ -15,6 +15,8 @@ from sklearn.metrics import accuracy_score
 import os
 from joblib import load
 from scipy.special import softmax
+import firebase_admin
+from firebase_admin import credentials
 
 
 nltk.download('punkt')
@@ -24,11 +26,12 @@ app = Flask(__name__)
 CORS(app)
 
 # Connect to MongoDB
-client = MongoClient('mongodb+srv://phlpat:P1234567890@cluster0.hm4z34c.mongodb.net/test')
+client = MongoClient('mongodb+srv://phlpat:Pat12485@cluster0.hm4z34c.mongodb.net/test')
 db = client.mydb
 
 
 @app.route('/')
+@cross_origin()
 def hello():
     return "Identification from Text Messages"
 
@@ -36,17 +39,20 @@ def hello():
 
 
 @app.route('/image/<image_id>')
+@cross_origin()
 def image(image_id):
     # code to determine the path of the image based on image_id
     return send_file(pathlib.Path("basleng"+image_id+".jpg").resolve(), mimetype='image/jpg')
 
 @app.route('/organizer/<organizer_id>')
+@cross_origin()
 def organizer(organizer_id):
     # code to determine the path of the image based on image_id
     return send_file(pathlib.Path(organizer_id+".jpg").resolve(), mimetype='image/jpg')
 
 # POST METHOD
 @app.route('/search', methods=['POST'])
+@cross_origin()
 def predict():
     if request.method == 'POST':
         body = request.get_json()
@@ -190,6 +196,7 @@ def predict():
 
 
 @app.route('/preview', methods=['GET'])
+@cross_origin()
 def preview():
     if request.method == 'GET':
         try:
@@ -202,6 +209,7 @@ def preview():
 
 
 @app.route('/example', methods=['GET'])
+@cross_origin()
 def example():
     if request.method == 'GET':
         try:
