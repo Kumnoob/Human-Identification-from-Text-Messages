@@ -150,7 +150,7 @@ export default function SearchPage() {
   // ส่งค่าไปที่ back-end(flask) และประมวณผลส่งข้อมูลกลับมา
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://3.92.179.53/search", {
+    fetch("http://3.92.179.53/search", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
