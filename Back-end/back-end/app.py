@@ -1,4 +1,4 @@
-from flask import Flask, send_file, request, jsonify
+from flask import Flask, send_file, request, jsonify, make_response
 import numpy as np
 from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
@@ -65,44 +65,34 @@ def predict():
                 lstm_model = load_model('lstm_model_001.h5')
                 doc2vec_model = Doc2Vec.load('doc2vec_001_model.bin')
                 print("message", input_string)
-                # Example input string
-
-                # Remove punctuation
+                
                 text = input_string.translate(str.maketrans('', '', string.punctuation))
                 
-                # Convert to lowercase
                 text = text.lower()
-                
-                # Tokenize into words
+
                 preprocessed_string = nltk.word_tokenize(text)
 
                 doc_vector = doc2vec_model.infer_vector(preprocessed_string)
                 doc_vector = np.reshape(doc_vector, (1, 1, 300))
                 print(doc_vector)
 
-                # Make predictions on the embedded input data
                 prediction = lstm_model.predict(doc_vector)
 
                 print("prediction: ", prediction)
                 predicted_class_idx = np.argmax(prediction)
                 print(predicted_class_idx)
 
-                # Compute softmax probabilities for the predictions
                 softmax_prediction = np.apply_along_axis(lambda x: np.exp(x) / np.sum(np.exp(x)), axis=1, arr=prediction)
 
-                # Get the top-5 indices and corresponding probabilities for each input in the batch
-                top_k = 5  # Number of classes to consider
+                top_k = 5 
                 top_k_indices = np.argsort(softmax_prediction, axis=1)[:, -top_k:]
                 top_k_probabilities = np.take_along_axis(softmax_prediction, top_k_indices, axis=1)
-                # Print the top-k indices and probabilities for each input in the batch
 
                 listPercent = []
                 for i in range(len(top_k_indices)):
-                    # print(f"Input {i}: {top_k} classes with highest probabilities:")
                     for j in range(top_k):
                         class_idx = top_k_indices[i, j]
                         class_prob = top_k_probabilities[i, j]
-                        # print(f"\tClass {class_idx}: {class_prob:.2%}")
                         listPercent.append(float(class_prob))
 
                 listPercent.reverse()
@@ -110,18 +100,6 @@ def predict():
                 # get list of author top 5
                 authors = list(np.argsort(softmax_prediction, axis=1)[:, -5:][0])
                 authors.reverse()
-                # print(authors)
-                # print("rank 1 is",authors[0])
-                # print("rank 2 is",authors[1])
-                # print("rank 3 is",authors[2])
-                # print("rank 4 is",authors[3])
-                # print("rank 5 is",authors[4])
-
-                # # Print the predicted class indices and probabilities
-                # print(int(predicted_probabilities*100))
-
-                # # print(str(prediction))
-                # print(int(class_label))
 
                 try:
                     author_1 = db.authors.find({"id": int(authors[0])})
@@ -206,15 +184,15 @@ def preview():
             return dumps(res), 201
         except ValueError:
             pass
-
-
+        
 @app.route('/example', methods=['GET'])
 @cross_origin()
 def example():
+    print("example works")
     if request.method == 'GET':
         try:
             collection = client['mydb']['examples']
-    
+            print(collection)
             # Execute the aggregation pipeline
             randExample = []
             for i in range(1,110):
@@ -222,13 +200,16 @@ def example():
                     { "$match": { "id": i } },
                     { "$sample": { "size": 1} }
                 ]
+                print("i ",i)
                 res = list(collection.aggregate(pipeline))
                 randExample.append(res)
 
             # print(randExample)
-            return dumps(randExample), 201
+            response = make_response(dumps(randExample), 201)
+            print(response)
+            return response
         except ValueError:
             pass
-        
+
 if __name__ == '__main__':
     app.run()
