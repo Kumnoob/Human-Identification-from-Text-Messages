@@ -150,7 +150,7 @@ export default function SearchPage() {
   // ส่งค่าไปที่ back-end(flask) และประมวณผลส่งข้อมูลกลับมา
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch("http://localhost:5000/search", {
+    fetch("https://3.92.179.53/search", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -192,7 +192,7 @@ export default function SearchPage() {
             <Col xl={2} lg={2} md={2} sm={0}></Col>
             <Col>
               <img
-                src="https://api.lorem.space/image/face"
+                src="/placeholder.png"
                 width={300}
                 height={300}
                 style={{ borderRadius: "20px" }}

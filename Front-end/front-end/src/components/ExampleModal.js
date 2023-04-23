@@ -30,7 +30,7 @@ export default function ExampleModal() {
   //fetch all authors
   useEffect(() => {
     const fetchAuthor = () => {
-      fetch("http://localhost:5000/example", {
+      fetch("http://3.92.179.53/example", {
         method: "GET",
       })
         .then((response) => response.json())

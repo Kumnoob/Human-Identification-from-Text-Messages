@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal, ModalHeader, ModalBody, Row, Col } from "reactstrap";
+import { Button, Modal, ModalHeader, Row, Col } from "reactstrap";
 import { useState } from "react";
 import "./CompareModal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

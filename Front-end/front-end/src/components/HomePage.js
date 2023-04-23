@@ -17,7 +17,7 @@ export default function HomePage() {
   //fetch all authors
   useEffect(() => {
     const fetchAuthor = () => {
-      fetch("http://localhost:5000/preview", {
+      fetch("http://3.92.179.53/preview", {
         method: "GET",
       })
         .then((response) => response.json())
