@@ -32,7 +32,7 @@ export default function OrganizerPage() {
       <Row>
         <Col md={6} sm={12}>
           <img
-            src={`http://3.92.179.53/organizer/${62010604}`}
+            src={`http://127.0.0.1:5000/organizer/${62010604}`}
             alt="image"
             style={{ width: "20vw", height: "20vw", borderRadius:"20px", boxShadow: "5px 10px 20px 0px #394A6A" }}
           />
@@ -40,7 +40,7 @@ export default function OrganizerPage() {
         </Col>
         <Col md={6} sm={12}>
           <img
-            src={`http://3.92.179.53/organizer/${62010785}`}
+            src={`http://127.0.0.1:5000/organizer/${62010785}`}
             alt="image"
             style={{ width: "15vw", height: "20vw", borderRadius:"20px", boxShadow: "5px 10px 20px 0px #394A6A" }}
           />

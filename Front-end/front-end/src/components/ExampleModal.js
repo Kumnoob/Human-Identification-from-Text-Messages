@@ -16,6 +16,11 @@ export default function ExampleModal() {
     event.preventDefault();
     setmodal(!modal);
     toggle.bind();
+    if(modal === false)
+    {
+      fetchAuthor();
+    }
+    
   };
 
   const [data, setData] = useState([]);
@@ -28,17 +33,14 @@ export default function ExampleModal() {
   };
 
   //fetch all authors
-  useEffect(() => {
-    const fetchAuthor = () => {
-      fetch("http://3.92.179.53/example", {
-        method: "GET",
-      })
-        .then((response) => response.json())
-        .then((data) => AuthorDisplay(data))
-        .catch((error) => console.error(error));
-    };
-    fetchAuthor();
-  }, []);
+  const fetchAuthor = () => {
+    fetch("http://127.0.0.1:5000/example", {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data) => AuthorDisplay(data))
+      .catch((error) => console.error(error));
+  };
 
   return (
     <div>

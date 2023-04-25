@@ -149,8 +149,9 @@ export default function SearchPage() {
 
   // ส่งค่าไปที่ back-end(flask) และประมวณผลส่งข้อมูลกลับมา
   const handleSubmit = (event) => {
+    setIsLoading(true);
     event.preventDefault();
-    fetch("http://3.92.179.53/search", {
+    fetch("http://127.0.0.1:5000/search", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -316,7 +317,7 @@ export default function SearchPage() {
                     value={"Model1"}
                     onClick={(e) => handleModel1ButtonClick(e, "value")}
                   >
-                    Model 1
+                    LSTM
                   </Button>
                 </Row>
                 <Row style={{ marginTop: "20px" }}>
@@ -326,10 +327,10 @@ export default function SearchPage() {
                     value={"Model2"}
                     onClick={(e) => handleModel2ButtonClick(e, "value")}
                   >
-                    Model 2
+                    SVM
                   </Button>
                 </Row>
-                <Row style={{ marginTop: "20px" }}>
+                {/* <Row style={{ marginTop: "20px" }}>
                   <Button
                     color={model3Button ? "primary" : "secondary"}
                     style={{ width: "80%", height: "50px", margin: "0 auto" }}
@@ -348,7 +349,7 @@ export default function SearchPage() {
                   >
                     Model 4
                   </Button>
-                </Row>
+                </Row> */}
               </Col>
               <Col xl={1} lg={1} md={1} sm={1}></Col>
             </Row>
