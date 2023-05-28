@@ -14,9 +14,11 @@ from sklearn.svm import OneClassSVM
 from sklearn.metrics import accuracy_score
 import os
 from joblib import load
+import joblib
 from scipy.special import softmax
-import firebase_admin
-from firebase_admin import credentials
+from sklearn.svm import SVC
+import math
+import pickle
 
 
 nltk.download('punkt')
@@ -60,115 +62,120 @@ def predict():
         model_type = body["model"]
         null = ""
         input_string = body["message"]
-        match model_type:
-            case "Model1":
-                lstm_model = load_model('lstm_model_001.h5')
-                doc2vec_model = Doc2Vec.load('doc2vec_001_model.bin')
-                print("message", input_string)
-                
-                text = input_string.translate(str.maketrans('', '', string.punctuation))
-                
-                text = text.lower()
+        if model_type == "Model1":
+            lstm_model = load_model('lstm_model_001.h5')
+            doc2vec_model = Doc2Vec.load('doc2vec_001_model.bin')
+            print("message", input_string)
+            
+            text = input_string.translate(str.maketrans('', '', string.punctuation))
+            
+            text = text.lower()
 
-                preprocessed_string = nltk.word_tokenize(text)
+            preprocessed_string = nltk.word_tokenize(text)
 
-                doc_vector = doc2vec_model.infer_vector(preprocessed_string)
-                doc_vector = np.reshape(doc_vector, (1, 1, 300))
-                print(doc_vector)
+            doc_vector = doc2vec_model.infer_vector(preprocessed_string)
+            doc_vector = np.reshape(doc_vector, (1, 1, 300))
+            print(doc_vector)
 
-                prediction = lstm_model.predict(doc_vector)
+            prediction = lstm_model.predict(doc_vector)
 
-                print("prediction: ", prediction)
-                predicted_class_idx = np.argmax(prediction)
-                print(predicted_class_idx)
+            print("prediction: ", prediction)
+            predicted_class_idx = np.argmax(prediction)
+            print(predicted_class_idx)
 
-                softmax_prediction = np.apply_along_axis(lambda x: np.exp(x) / np.sum(np.exp(x)), axis=1, arr=prediction)
+            softmax_prediction = np.apply_along_axis(lambda x: np.exp(x) / np.sum(np.exp(x)), axis=1, arr=prediction)
 
-                top_k = 5 
-                top_k_indices = np.argsort(softmax_prediction, axis=1)[:, -top_k:]
-                top_k_probabilities = np.take_along_axis(softmax_prediction, top_k_indices, axis=1)
+            top_k = 5 
+            top_k_indices = np.argsort(softmax_prediction, axis=1)[:, -top_k:]
+            top_k_probabilities = np.take_along_axis(softmax_prediction, top_k_indices, axis=1)
 
-                listPercent = []
-                for i in range(len(top_k_indices)):
-                    for j in range(top_k):
-                        class_idx = top_k_indices[i, j]
-                        class_prob = top_k_probabilities[i, j]
-                        listPercent.append(float(class_prob))
+            listPercent = []
+            for i in range(len(top_k_indices)):
+                for j in range(top_k):
+                    class_idx = top_k_indices[i, j]
+                    class_prob = top_k_probabilities[i, j]
+                    listPercent.append(float(class_prob))
 
-                listPercent.reverse()
+            listPercent.reverse()
 
-                # get list of author top 5
-                authors = list(np.argsort(softmax_prediction, axis=1)[:, -5:][0])
-                authors.reverse()
+            # get list of author top 5
+            authors = list(np.argsort(softmax_prediction, axis=1)[:, -5:][0])
+            authors.reverse()
 
-                try:
-                    author_1 = db.authors.find({"id": int(authors[0])})
-                    author_2 = db.authors.find({"id": int(authors[1])})
-                    author_3 = db.authors.find({"id": int(authors[2])})
-                    author_4 = db.authors.find({"id": int(authors[3])})
-                    author_5 = db.authors.find({"id": int(authors[4])})
-                    data = list(author_1), list(author_2), list(author_3), list(author_4), list(author_5), listPercent
+            try:
+                author_1 = db.authors.find({"id": int(authors[0])})
+                author_2 = db.authors.find({"id": int(authors[1])})
+                author_3 = db.authors.find({"id": int(authors[2])})
+                author_4 = db.authors.find({"id": int(authors[3])})
+                author_5 = db.authors.find({"id": int(authors[4])})
+                data = list(author_1), list(author_2), list(author_3), list(author_4), list(author_5), listPercent
 
-                    # print(data)
-                    if (data == []):
-                        return [{"id": "", "name": "", "text": ""}, {"id": "", "name": "", "text": ""}, {"id": "", "name": "", "text": ""}, {"id": "", "name": "", "text": ""}, {"id": "", "name": "", "text": ""}]
-                    else:
-                        return dumps(data)
-                except ValueError:
-                    pass
-            case "Model2":
-                model_folder = 'svm_model'
-                models = {}
-                d2v_model = Doc2Vec.load("doc2vec_svm.bin")
+                # print(data)
+                if (data == []):
+                    return [{"id": "", "name": "", "text": ""}, {"id": "", "name": "", "text": ""}, {"id": "", "name": "", "text": ""}, {"id": "", "name": "", "text": ""}, {"id": "", "name": "", "text": ""}]
+                else:
+                    return dumps(data)
+            except ValueError:
+                pass
+        else:
+            model_folder = 'svm_model'
+            models = {}
+            d2v_model = Doc2Vec.load("doc2vec_svm.bin")
 
-                # Loop over all model files in the folder
-                for filename in os.listdir(model_folder):
-                    model_path = os.path.join(model_folder, filename)
-                    models[filename] = load(model_path)
-                print(models)
+            # Loop over all model files in the folder
+            for filename in os.listdir(model_folder):
+                model_path = os.path.join(model_folder, filename)
+                models[filename] = load(model_path)
+            print(models)
 
-                # Remove punctuation
-                text = input_string.translate(str.maketrans('', '', string.punctuation))
-                
-                # Convert to lowercase
-                text = text.lower()
-                
-                # Tokenize into words
-                preprocessed_string = nltk.word_tokenize(text)
+            # Remove punctuation
+            text = input_string.translate(str.maketrans('', '', string.punctuation))
+            
+            # Convert to lowercase
+            text = text.lower()
+            
+            # Tokenize into words
+            preprocessed_string = nltk.word_tokenize(text)
 
-                vector = d2v_model.infer_vector(preprocessed_string)
-                scores = {}
-                probs = {}
-                for label in models:
-                    model = models[label]
-                    score = model.decision_function([vector])[0]
-                    scores[label] = score
-                    prob = 100 / (1 + np.exp(-score))
-                    probs[label] = prob
-                print(probs)
-                top_labels = sorted(probs, key=lambda x: probs[x], reverse=True)[:5]
+            vector = d2v_model.infer_vector(preprocessed_string)
+            scores = {}
+            probs = {}
+            for label in models:
+                model = models[label]
+                score = model.decision_function([vector])[0]
+                scores[label] = score
+                prob = 1 / (1 + np.exp(-score))
+                probs[label] = prob
+                print("score ", label, ": ",score)
+            print(probs)
+            top_labels = sorted(probs, key=lambda x: probs[x], reverse=True)[:5]
 
 
 
-                for i in range(len(top_labels)):
-                    top_labels[i] = str(top_labels[i])[len("model_"):-len(".pkl")]
-                print(top_labels)
+            for i in range(len(top_labels)):
+                top_labels[i] = str(top_labels[i])[len("model_"):-len(".pkl")]
+            print(top_labels)
 
-                try:
-                    author_1 = db.authors.find({"label": str(top_labels[0])})
-                    author_2 = db.authors.find({"label": str(top_labels[1])})
-                    author_3 = db.authors.find({"label": str(top_labels[2])})
-                    author_4 = db.authors.find({"label": str(top_labels[3])})
-                    author_5 = db.authors.find({"label": str(top_labels[4])})
-                    data = list(author_1), list(author_2), list(author_3), list(author_4), list(author_5), [1,1,1,1,1]
+            prob_rank_1 = "model_" + str(top_labels[0]) +".pkl"
+            prob_rank_2 = "model_" + str(top_labels[1]) +".pkl"
+            prob_rank_3 = "model_" + str(top_labels[2]) +".pkl"
+            prob_rank_4 = "model_" + str(top_labels[3]) +".pkl"
+            prob_rank_5 = "model_" + str(top_labels[4]) +".pkl"
+            try:
+                author_1 = db.authors.find({"label": str(top_labels[0])})
+                author_2 = db.authors.find({"label": str(top_labels[1])})
+                author_3 = db.authors.find({"label": str(top_labels[2])})
+                author_4 = db.authors.find({"label": str(top_labels[3])})
+                author_5 = db.authors.find({"label": str(top_labels[4])})
+                data = list(author_1), list(author_2), list(author_3), list(author_4), list(author_5), [probs[prob_rank_1],probs[prob_rank_2],probs[prob_rank_3],probs[prob_rank_4],probs[prob_rank_5]]
 
-                    # print(data)
-                    if (data == []):
-                        return [{"id": "", "name": "", "text": ""}, {"id": "", "name": "", "text": ""}, {"id": "", "name": "", "text": ""}, {"id": "", "name": "", "text": ""}, {"id": "", "name": "", "text": ""}]
-                    else:
-                        return dumps(data)
-                except ValueError:
-                    pass
+                # print(data)
+                if (data == []):
+                    return [{"id": "", "name": "", "text": ""}, {"id": "", "name": "", "text": ""}, {"id": "", "name": "", "text": ""}, {"id": "", "name": "", "text": ""}, {"id": "", "name": "", "text": ""}]
+                else:
+                    return dumps(data)
+            except ValueError:
+                pass
 
     return {"log": "message is being processed", "id": null}, 201
 
